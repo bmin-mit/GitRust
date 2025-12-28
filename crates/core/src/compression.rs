@@ -1,0 +1,9 @@
+use std::io::{ErrorKind, Write};
+use flate2::Compression;
+use flate2::write::ZlibEncoder;
+
+pub fn deflate(data: Vec<u8>) -> Result<Vec<u8>, std::io::Error> {
+    let mut encoder = ZlibEncoder::new(Vec::new(), Compression::default());
+    encoder.write_all(&data)?;
+    Ok(encoder.finish()?)
+}

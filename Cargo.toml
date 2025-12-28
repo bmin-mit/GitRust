@@ -1,0 +1,15 @@
+[package]
+name = "gitrust"
+version = "0.1.0"
+edition = "2024"
+
+[workspace]
+resolver = "3"
+members = ["crates/*"]
+
+[dependencies]
+anyhow = "1.0.100"
+gitrust-cli_parser = { version = "0.1.0", path = "crates/cli_parser" }
+gitrust-common = { version = "0.1.0", path = "crates/common" }
+gitrust-core = { version = "0.1.0", path = "crates/core" }
+gitrust-io = { version = "0.1.0", path = "crates/io" }
