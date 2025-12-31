@@ -8,3 +8,6 @@ pub struct HashObjectArgs {
     #[arg(long)]
     pub stdin: bool,
 }
+
+#[derive(Args)]
+pub struct InitArgs {}

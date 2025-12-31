@@ -1,4 +1,4 @@
-use gitrust_core::hashing::hash;
+use crate::utils::hash;
 use crate::errors::GitObjectIsNotBlobErr;
 
 pub struct GitBlobObject {

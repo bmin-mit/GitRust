@@ -189,9 +189,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "gitrust-cli_parser",
- "gitrust-common",
  "gitrust-core",
- "gitrust-io",
 ]
 
 [[package]]
@@ -199,16 +197,6 @@ name = "gitrust-cli_parser"
 version = "0.1.0"
 dependencies = [
  "clap",
- "gitrust-common",
-]
-
-[[package]]
-name = "gitrust-common"
-version = "0.1.0"
-dependencies = [
- "clap",
- "gitrust-core",
- "thiserror",
 ]
 
 [[package]]
@@ -216,15 +204,9 @@ name = "gitrust-core"
 version = "0.1.0"
 dependencies = [
  "flate2",
+ "gitrust-cli_parser",
  "sha1",
-]
-
-[[package]]
-name = "gitrust-io"
-version = "0.1.0"
-dependencies = [
- "gitrust-common",
- "gitrust-core",
+ "thiserror",
 ]
 
 [[package]]

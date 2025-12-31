@@ -1,5 +1,8 @@
+pub mod args;
+pub mod commands;
+
 use clap::Parser;
-use gitrust_common::cli::CliCommands;
+pub use crate::commands::CliCommands;
 
 #[derive(Parser)]
 #[command(name = "GitRust")]
