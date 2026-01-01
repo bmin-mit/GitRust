@@ -9,5 +9,6 @@ members = ["crates/*"]
 
 [dependencies]
 anyhow = "1.0.100"
+assert_cmd = "2.1.1"
 gitrust-cli_parser = { version = "0.1.0", path = "crates/cli_parser" }
 gitrust-core = { version = "0.1.0", path = "crates/core" }
