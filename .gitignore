@@ -1,2 +1,4 @@
 /target
-/.gitrust
+
+# Test environment folder
+/.gitrustg

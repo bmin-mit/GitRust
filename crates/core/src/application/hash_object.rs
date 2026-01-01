@@ -33,7 +33,7 @@ pub struct HashObjectCommand {
 impl HashObjectCommand {
     pub fn new(args: HashObjectArgs) -> Self {
         Self {
-            args: args,
+            args,
             data: None,
             git_obj: None,
         }

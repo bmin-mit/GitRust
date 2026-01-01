@@ -1,4 +1,3 @@
-use crate::ports::TextInput;
 use std::io::{Read, Result, stdin};
 
 pub struct StdInput {}
@@ -8,8 +7,6 @@ impl StdInput {
         StdInput {}
     }
 }
-
-impl TextInput for StdInput {}
 
 impl Read for StdInput {
     fn read(&mut self, buf: &mut [u8]) -> Result<usize> {

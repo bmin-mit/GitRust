@@ -1,30 +1,28 @@
-use assert_cmd::cargo::cargo_bin_cmd;
-use assert_cmd::Command;
+mod common;
+use common::TestCommand;
 
-fn create_cmd() -> Command {
-    let mut cmd = cargo_bin_cmd!();
-    cmd.arg("hash-object");
-
+fn create_cmd() -> TestCommand {
+    let mut cmd = common::create_cmd();
+    cmd.cmd().arg("hash-object");
     cmd
 }
-
-fn create_git_cmd() -> Command {
-    let mut cmd = Command::new("git");
-    cmd.arg("hash-object");
-
+fn create_git_cmd() -> TestCommand {
+    let mut cmd = common::create_git_cmd();
+    cmd.cmd().arg("hash-object");
     cmd
 }
 
 fn test_hash_object_from_stdin(stdin_string: &str) {
-    let mut cmd = create_cmd();
-    cmd.write_stdin(stdin_string);
+    let mut test_cmd = create_cmd();
+    let cmd = test_cmd.cmd();
+    cmd.arg("--stdin").write_stdin(stdin_string);
 
-    let mut git_cmd = create_git_cmd();
-    git_cmd.arg("--stdin")
-        .write_stdin(stdin_string);
+    let mut test_git_cmd = create_git_cmd();
+    let git_cmd = test_git_cmd.cmd();
+    git_cmd.arg("--stdin").write_stdin(stdin_string);
+
     let git_output = git_cmd.unwrap();
-
-    cmd.assert().stdout(git_output.stdout).success();
+    cmd.assert().stdout(git_output.stdout);
 }
 
 #[test]

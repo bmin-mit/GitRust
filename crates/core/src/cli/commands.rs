@@ -1,4 +1,4 @@
-pub struct GitRustCommands {}
+pub struct GitRustCommands;
 
 impl GitRustCommands {
     pub fn init() {}

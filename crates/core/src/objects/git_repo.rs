@@ -1,6 +1,4 @@
-use std::fs;
 use std::path::{Path, PathBuf};
-use crate::errors::GitRepoNotInitialized;
 
 pub const DEFAULT_GITRUST_FOLDER: &str = ".gitrust";
 
@@ -16,7 +14,7 @@ impl GitRepo {
             git_dir_path: root_path.join(DEFAULT_GITRUST_FOLDER),
         }
     }
-    
+
     pub fn is_valid_repo(&self) -> bool {
         self.git_dir_path.exists() && self.git_dir_path.is_dir()
     }
