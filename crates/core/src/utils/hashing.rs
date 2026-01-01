@@ -10,3 +10,10 @@ pub fn hash(object: &[u8]) -> Vec<u8> {
 
     vec
 }
+
+pub fn hash_to_string(hash: &[u8]) -> String {
+    hash.iter()
+        .map(|b| format!("{:02x}", b).to_string())
+        .collect::<Vec<String>>()
+        .join("")
+}

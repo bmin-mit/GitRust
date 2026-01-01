@@ -13,27 +13,21 @@ pub enum InitCommandError {
 
 pub struct InitCommand {
     args: InitArgs,
+    repo: GitRepo,
 }
 
 impl InitCommand {
     pub fn new(args: InitArgs) -> Self {
-        Self { args }
+        Self { args, repo: GitRepo::default() }
     }
 
     pub fn init(&self) -> Result<(), InitCommandError> {
-        let pwd = current_dir().unwrap();
-
-        let repo = GitRepo::new(&pwd);
-        if repo.is_valid_repo() {
+        if self.repo.is_valid_repo() {
             Err(GitRepoAlreadyInitialized {})?
         }
 
-        Self::create_git_dir(repo)?;
+        self.repo.create_git_dir()?;
 
         Ok(())
-    }
-
-    fn create_git_dir(repo: GitRepo) -> io::Result<()> {
-        create_dir_all(repo.git_dir_path)
     }
 }

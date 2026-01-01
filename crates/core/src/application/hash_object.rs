@@ -1,11 +1,11 @@
 use std::fmt::Display;
-use std::io::Read;
+use std::io::{stdin, Read};
 
-use crate::adapters::StdInput;
 use crate::errors::GitObjectIsNotBlobErr;
-use crate::objects::GitObject;
+use crate::objects::{GitObject, GitRepo};
 use gitrust_cli_parser::args::HashObjectArgs;
 use thiserror::Error;
+use crate::utils::hash_to_string;
 
 #[derive(Debug, Error)]
 pub struct NoInput;
@@ -19,7 +19,6 @@ impl Display for NoInput {
 #[derive(Debug, Error)]
 #[error(transparent)]
 pub enum HashObjectCommandError {
-    ObjectIsNotBlob(#[from] GitObjectIsNotBlobErr),
     NoInput(#[from] NoInput),
     IoError(#[from] std::io::Error),
 }
@@ -28,6 +27,7 @@ pub struct HashObjectCommand {
     args: HashObjectArgs,
     data: Option<Vec<u8>>,
     git_obj: Option<GitObject>,
+    repo: GitRepo,
 }
 
 impl HashObjectCommand {
@@ -36,6 +36,7 @@ impl HashObjectCommand {
             args,
             data: None,
             git_obj: None,
+            repo: GitRepo::default(),
         }
     }
 
@@ -45,6 +46,10 @@ impl HashObjectCommand {
 
         let hash_result = self.hash_git_obj()?;
         let formatted_hash = self.format_hash(&hash_result);
+
+        if (self.args.write) {
+            self.write_to_repo()?;
+        }
 
         println!("{formatted_hash}");
 
@@ -64,7 +69,7 @@ impl HashObjectCommand {
     }
 
     fn get_input_source(&self) -> impl Read {
-        StdInput::new()
+        stdin()
     }
 
     fn init_git_obj(&mut self) -> Result<(), NoInput> {
@@ -78,7 +83,7 @@ impl HashObjectCommand {
 
     fn hash_git_obj(&self) -> Result<Vec<u8>, HashObjectCommandError> {
         if let Some(obj) = &self.git_obj {
-            let hash_result = obj.hash()?;
+            let hash_result = obj.hash();
             Ok(hash_result)
         } else {
             Err(NoInput {})?
@@ -86,9 +91,10 @@ impl HashObjectCommand {
     }
 
     fn format_hash(&self, hash: &[u8]) -> String {
-        hash.iter()
-            .map(|b| format!("{:02x}", b).to_string())
-            .collect::<Vec<String>>()
-            .join("")
+        hash_to_string(hash)
+    }
+
+    fn write_to_repo(&self) -> std::io::Result<()> {
+        self.repo.write_obj_to_db(&self.git_obj.as_ref().unwrap())
     }
 }

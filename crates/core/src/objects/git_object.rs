@@ -1,4 +1,4 @@
-use crate::utils::hash;
+use crate::utils::{deflate, hash};
 use crate::errors::GitObjectIsNotBlobErr;
 
 pub struct GitBlobObject {
@@ -8,6 +8,8 @@ pub struct GitBlobObject {
 pub enum GitObjectType {
     Blob(GitBlobObject),
     Tree,
+    Commit,
+    Tag,
 }
 
 pub struct GitObject {
@@ -35,33 +37,38 @@ impl GitObject {
         }
     }
 
-    pub fn hash(&self) -> Result<Vec<u8>, GitObjectIsNotBlobErr> {
-        let header = self.header()?;
-        let data = self.data()?;
+    pub fn hash(&self) -> Vec<u8> {
+        let header = self.header();
+        let data = self.data();
 
         let mut store = header;
         store.extend_from_slice(&data);
 
-        Ok(hash(&store))
+        hash(&store)
     }
 
-    fn data(&self) -> Result<&Vec<u8>, GitObjectIsNotBlobErr> {
+    pub fn deflate(&self) -> std::io::Result<Vec<u8>> {
+        deflate(self.data())
+    }
+
+    fn data(&self) -> Vec<u8> {
         if let GitObjectType::Blob(blob) = &self.obj_type {
             let GitBlobObject { data } = blob;
-            return Ok(data);
+            data.to_owned()
+        } else {
+            Vec::<u8>::new()
         }
-        Err(GitObjectIsNotBlobErr)
     }
 
-    fn header(&self) -> Result<Vec<u8>, GitObjectIsNotBlobErr> {
+    fn header(&self) -> Vec<u8> {
         let mut header = Vec::<u8>::new();
-        let data = self.data()?;
+        let data = self.data();
         let size = data.len();
 
         header.extend_from_slice(b"blob ");
         header.extend_from_slice(size.to_string().as_bytes());
         header.push(b'\0');
 
-        Ok(header)
+        header
     }
 }

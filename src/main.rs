@@ -1,6 +1,6 @@
 use gitrust_cli_parser::{CliCommands, CliParser};
 use gitrust_core::{
-    application::{HashObjectCommand, InitCommand},
+    application::*,
     errors::CommandNotFound,
 };
 
