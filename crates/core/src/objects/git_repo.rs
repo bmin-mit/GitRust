@@ -9,7 +9,9 @@ pub struct GitRepo {
 
 impl GitRepo {
     pub fn new(root_path: &Path) -> Self {
-        Self { repo_fs: GitRepoFs::new(root_path) }
+        Self {
+            repo_fs: GitRepoFs::new(root_path),
+        }
     }
 
     pub fn default() -> Self {

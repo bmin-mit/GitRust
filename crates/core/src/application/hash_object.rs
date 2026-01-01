@@ -1,11 +1,10 @@
 use std::fmt::Display;
-use std::io::{stdin, Read};
+use std::io::{Read, stdin};
 
-use crate::errors::GitObjectIsNotBlobErr;
 use crate::objects::{GitObject, GitRepo};
+use crate::utils::hash_to_string;
 use gitrust_cli_parser::args::HashObjectArgs;
 use thiserror::Error;
-use crate::utils::hash_to_string;
 
 #[derive(Debug, Error)]
 pub struct NoInput;

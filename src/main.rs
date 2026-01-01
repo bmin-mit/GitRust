@@ -1,8 +1,5 @@
 use gitrust_cli_parser::{CliCommands, CliParser};
-use gitrust_core::{
-    application::*,
-    errors::CommandNotFound,
-};
+use gitrust_core::{application::*, errors::CommandNotFound};
 
 fn main() -> anyhow::Result<()> {
     let cli = CliParser::parse();

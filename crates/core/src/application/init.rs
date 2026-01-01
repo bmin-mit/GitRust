@@ -18,7 +18,10 @@ pub struct InitCommand {
 
 impl InitCommand {
     pub fn new(args: InitArgs) -> Self {
-        Self { args, repo: GitRepo::default() }
+        Self {
+            args,
+            repo: GitRepo::default(),
+        }
     }
 
     pub fn init(&self) -> Result<(), InitCommandError> {

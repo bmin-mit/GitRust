@@ -1,5 +1,5 @@
-use thiserror::Error;
 use std::fmt::{Display, Formatter};
+use thiserror::Error;
 
 #[derive(Error, Debug)]
 pub struct CommandNotFound {}

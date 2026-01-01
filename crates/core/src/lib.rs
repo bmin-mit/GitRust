@@ -1,8 +1,8 @@
-pub mod objects;
-pub mod errors;
-pub mod application;
-pub mod utils;
-mod cli;
-mod infrastructure;
 mod adapters;
+pub mod application;
+mod cli;
+pub mod errors;
+mod infrastructure;
+pub mod objects;
 mod ports;
+pub mod utils;

@@ -1,8 +1,8 @@
 pub mod args;
 pub mod commands;
 
-use clap::Parser;
 pub use crate::commands::CliCommands;
+use clap::Parser;
 
 #[derive(Parser)]
 #[command(name = "GitRust")]

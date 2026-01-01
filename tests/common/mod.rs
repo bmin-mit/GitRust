@@ -1,5 +1,5 @@
-use assert_cmd::{cargo_bin_cmd, Command};
-use tempfile::{TempDir};
+use assert_cmd::{Command, cargo_bin_cmd};
+use tempfile::TempDir;
 
 pub struct TestCommand {
     _pwd: TempDir,
