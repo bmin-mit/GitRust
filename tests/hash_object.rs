@@ -1,5 +1,7 @@
 mod common;
+
 use common::TestCommand;
+use std::fmt::format;
 
 fn create_cmd() -> TestCommand {
     let mut cmd = common::create_cmd();

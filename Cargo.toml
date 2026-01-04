@@ -5,11 +5,11 @@ edition = "2024"
 
 [workspace]
 resolver = "3"
-members = ["crates/*"]
+members = ["core", "cli_parser"]
 
 [dependencies]
 anyhow = "1.0.100"
 assert_cmd = "2.1.1"
-gitrust-cli_parser = { version = "0.1.0", path = "crates/cli_parser" }
-gitrust-core = { version = "0.1.0", path = "crates/core" }
+gitrust-cli_parser = { version = "0.1.0", path = "cli_parser" }
+gitrust-core = { version = "0.1.0", path = "core" }
 tempfile = "3.24.0"
